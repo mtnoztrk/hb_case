@@ -19,17 +19,17 @@ namespace hb_case
                 .AddScoped<TurnRightOrder>()
                 .AddScoped<TurnLeftOrder>()
                 // selecting correct order handler with strategy-like pattern
-                .AddScoped<Func<Orders, IOrder>>(serviceProvider =>
+                .AddScoped<Func<Orders, IOrder>>(orderProvider =>
                     key => 
                     { 
                         switch (key)
                         {
                             case Orders.Move:
-                                return serviceProvider.GetRequiredService<MoveOrder>();
+                                return orderProvider.GetRequiredService<MoveOrder>();
                             case Orders.TurnRight:
-                                return serviceProvider.GetRequiredService<TurnRightOrder>();
+                                return orderProvider.GetRequiredService<TurnRightOrder>();
                             case Orders.TurnLeft:
-                                return serviceProvider.GetRequiredService<TurnLeftOrder>();
+                                return orderProvider.GetRequiredService<TurnLeftOrder>();
                             default:
                                 throw new ArgumentException("Not valid OrderHandler.");
                         }
